@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Interior Register Form Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/style2.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css">
+    <title>@ViewBag.Title - AIR SEA AND SUN</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/img/MINI-LOGO-AIR-SEA-SUN.png" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+    <div class="navbar fixed-top navbar-expand-lg navbar-white bg-white">
+        <a class="navbar-brand" href="@Url.Action("Index","Home")">
+            <img src="~/img/LOGO-AIR-SEA-SUN.png" width="100" height="80" alt="logo" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" runat="server" href="@Url.Action("Hebergements","Home")">Hébergements</a>
+                <a class="nav-item nav-link" runat="server" href="@Url.Action("Reservations","Home")">Réservations</a>
+                <a class="nav-item nav-link" runat="server" href="@Url.Action("Favoris","Home")">Favoris</a>
+                <a class="nav-item nav-link" runat="server" href="@Url.Action("Contact","Home")">Contact</a>
+                <a class="nav-item nav-link" runat="server" href="@Url.Action("CreerCompte","Clients")">Inscription</a>
+                <a class="nav-item nav-link" runat="server" href="@Url.Action("Connexion","Clients")">Se Connecter</a>
+            </div>
+        </div>
+
+
+        <div class="col-2">
+            <div class="d-flex">
+                <a href="#" class="btn btn-success btn-lg" id="Connecte"><i class="far fa-lightbulb"></i> Connecté</a>
+                <a href="#" class="btn btn-danger btn-lg" id="Deconnecte"><i class="far fa-lightbulb"></i> Déconnecté</a>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - www.airseasun.com</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

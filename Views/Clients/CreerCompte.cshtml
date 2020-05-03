@@ -1,0 +1,156 @@
+﻿@model AirSeaAndSunProject.Models.Client
+
+@{
+    ViewBag.Title = "CreerCompte";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="signupform">        
+        <div class="container">
+
+            <div class="agile_info">
+                <div class="w3l_form">
+                    <div class="left_grid_info">
+                        <h3>Bienvenue !</h3>
+                        <h4>Votre villa de rêve dans les Caraïbes est à portée de main.</h4>
+                        <p> Suivez nous sur les réseaux sociaux.</p>
+                        <ul class="social_section_1info">
+                            <li><a href="#" class="w3_facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" class="w3_twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" class="w3_instagram"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#" class="w3_google"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#" class="w3_pinterest"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#" class="w3_vimeo"><i class="fa fa-vimeo"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="w3_info">
+                    <h2>Création de compte</h2>
+                    <p>Veuillez s'il vous plaît renseigner vos informations.</p>
+                    <form action="#" method="post">
+                        <div class="input-group">
+                            <span><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <input type="text" placeholder="Prénom" required="">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <input type="text" placeholder="Nom" required="">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                            <input type="email" placeholder="Email" required="">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <input type="text" placeholder="Login" required="">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fa fa-lock" aria-hidden="true"></i></span>
+                            <input type="Password" placeholder="Password" required="">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fa fa-lock" aria-hidden="true"></i></span>
+                            <input type="Password" placeholder="Confirm Password" required="">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                            <input type="tel" placeholder="Téléphone" required="">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fa fa-home" aria-hidden="true"></i></span>
+                            <input id="Text1" type="text" value="Veuillez choisir votre profil :" />
+                            <input id="Radio1" type="radio" placeholder="Radio" required="" checked>
+                            <input id="Text2" type="text" value="Location de Villa" />
+                            <input id="Radio2" type="radio" placeholder="Radio" required="" />
+                            <input id="Text3" type="text" value="Propriétaire de Villa" />
+                        </div>
+                        <input type="checkbox" value="remember-me" /> <h4>Je veux recevoir la newsletter </h4>
+                        <button class="btn btn-danger btn-block" type="submit">Créer mon compte</button>
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>        
+    </div>
+   
+
+    <div class="form-horizontal">
+        <h4>Client</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Prenom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prenom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prenom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telephone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Type)
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

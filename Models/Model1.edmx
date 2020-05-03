@@ -1,0 +1,766 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AirSeaSunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="IdAdmin" />
+          </Key>
+          <Property Name="IdAdmin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" />
+          <Property Name="Prenom" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Adresse">
+          <Key>
+            <PropertyRef Name="IdAdresse" />
+          </Key>
+          <Property Name="IdAdresse" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Numero" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Rue" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CodePostal" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Ville" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'AirSeaSun.dbo.AdresseClient' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="AdresseClient">
+          <Key>
+            <PropertyRef Name="IdAdresse" />
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdAdresse" Type="int" Nullable="false" />
+          <Property Name="IdClient" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Avi">
+          <Key>
+            <PropertyRef Name="IdAvis" />
+          </Key>
+          <Property Name="IdAvis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdClient" Type="int" Nullable="false" />
+          <Property Name="IdHebergement" Type="int" Nullable="false" />
+          <Property Name="Note" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Commentaire" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prenom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telephone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientAdresse">
+          <Key>
+            <PropertyRef Name="IdClient" />
+            <PropertyRef Name="IdAdresse" />
+          </Key>
+          <Property Name="IdClient" Type="int" Nullable="false" />
+          <Property Name="IdAdresse" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DispoHebergement">
+          <Key>
+            <PropertyRef Name="IdDispo" />
+          </Key>
+          <Property Name="IdDispo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdHebergement" Type="int" Nullable="false" />
+          <Property Name="DateDebut" Type="datetime" Nullable="false" />
+          <Property Name="DateFin" Type="datetime" Nullable="false" />
+          <Property Name="Prix" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Favori">
+          <Key>
+            <PropertyRef Name="IdClient" />
+            <PropertyRef Name="IdHebergement" />
+          </Key>
+          <Property Name="IdClient" Type="int" Nullable="false" />
+          <Property Name="IdHebergement" Type="int" Nullable="false" />
+          <Property Name="Commentaire" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Hebergement">
+          <Key>
+            <PropertyRef Name="IdHebergement" />
+          </Key>
+          <Property Name="IdHebergement" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAdresse" Type="int" Nullable="false" />
+          <Property Name="IdClient" Type="int" Nullable="false" />
+          <Property Name="NomHebergement" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="TypeHebergement" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PrixDeBase" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Etat" Type="bit" />
+          <Property Name="Departement" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Messagerie">
+          <Key>
+            <PropertyRef Name="IdMessagerie" />
+          </Key>
+          <Property Name="IdMessagerie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdExpediteur" Type="int" Nullable="false" />
+          <Property Name="IdDestinataire" Type="int" Nullable="false" />
+          <Property Name="Messages" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Statut" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="IdReservation" />
+          </Key>
+          <Property Name="IdReservation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdClient" Type="int" Nullable="false" />
+          <Property Name="IdHebergement" Type="int" Nullable="false" />
+          <Property Name="IdAdresse" Type="int" Nullable="false" />
+          <Property Name="DateReservation" Type="datetime" Nullable="false" />
+          <Property Name="PrixTotal" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Saison">
+          <Key>
+            <PropertyRef Name="IdSaison" />
+          </Key>
+          <Property Name="IdSaison" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdHebergement" Type="int" Nullable="false" />
+          <Property Name="DateDebut" Type="datetime" Nullable="false" />
+          <Property Name="DateFin" Type="datetime" Nullable="false" />
+          <Property Name="Prix" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ClientAdresse_Adresse">
+          <End Role="Adresse" Type="Self.Adresse" Multiplicity="1" />
+          <End Role="ClientAdresse" Type="Self.ClientAdresse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adresse">
+              <PropertyRef Name="IdAdresse" />
+            </Principal>
+            <Dependent Role="ClientAdresse">
+              <PropertyRef Name="IdAdresse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientAdresse_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientAdresse" Type="Self.ClientAdresse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="ClientAdresse">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispoHebergement_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="DispoHebergement" Type="Self.DispoHebergement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="DispoHebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favoris_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Favori" Type="Self.Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Favori">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favoris_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="Favori" Type="Self.Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="Favori">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hebergement_Adresse">
+          <End Role="Adresse" Type="Self.Adresse" Multiplicity="1" />
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adresse">
+              <PropertyRef Name="IdAdresse" />
+            </Principal>
+            <Dependent Role="Hebergement">
+              <PropertyRef Name="IdAdresse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hebergement_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Hebergement">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Saison_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="Saison" Type="Self.Saison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="Saison">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AirSeaSunModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Adresse" EntityType="Self.Adresse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Avi" EntityType="Self.Avi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientAdresse" EntityType="Self.ClientAdresse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DispoHebergement" EntityType="Self.DispoHebergement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favori" EntityType="Self.Favori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hebergement" EntityType="Self.Hebergement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messagerie" EntityType="Self.Messagerie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Saison" EntityType="Self.Saison" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdresseClient" EntityType="Self.AdresseClient" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AdresseClient].[IdAdresse] AS [IdAdresse], 
+    [AdresseClient].[IdClient] AS [IdClient]
+    FROM [dbo].[AdresseClient] AS [AdresseClient]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ClientAdresse_Adresse" Association="Self.FK_ClientAdresse_Adresse">
+            <End Role="Adresse" EntitySet="Adresse" />
+            <End Role="ClientAdresse" EntitySet="ClientAdresse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientAdresse_Client" Association="Self.FK_ClientAdresse_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientAdresse" EntitySet="ClientAdresse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispoHebergement_Hebergement" Association="Self.FK_DispoHebergement_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergement" />
+            <End Role="DispoHebergement" EntitySet="DispoHebergement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favoris_Client" Association="Self.FK_Favoris_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Favori" EntitySet="Favori" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favoris_Hebergement" Association="Self.FK_Favoris_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergement" />
+            <End Role="Favori" EntitySet="Favori" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hebergement_Adresse" Association="Self.FK_Hebergement_Adresse">
+            <End Role="Adresse" EntitySet="Adresse" />
+            <End Role="Hebergement" EntitySet="Hebergement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hebergement_Client" Association="Self.FK_Hebergement_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Hebergement" EntitySet="Hebergement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Client" Association="Self.FK_Reservation_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Hebergement" Association="Self.FK_Reservation_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergement" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Saison_Hebergement" Association="Self.FK_Saison_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergement" />
+            <End Role="Saison" EntitySet="Saison" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AirSeaSunModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="IdAdmin" />
+          </Key>
+          <Property Name="IdAdmin" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Adresse">
+          <Key>
+            <PropertyRef Name="IdAdresse" />
+          </Key>
+          <Property Name="IdAdresse" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rue" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodePostal" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ville" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Hebergements" Relationship="Self.FK_Hebergement_Adresse" FromRole="Adresse" ToRole="Hebergement" />
+          <NavigationProperty Name="Clients" Relationship="Self.ClientAdresse" FromRole="Adresse" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Avi">
+          <Key>
+            <PropertyRef Name="IdAvis" />
+          </Key>
+          <Property Name="IdAvis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="IdHebergement" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Favoris" Relationship="Self.FK_Favoris_Client" FromRole="Client" ToRole="Favori" />
+          <NavigationProperty Name="Hebergements" Relationship="Self.FK_Hebergement_Client" FromRole="Client" ToRole="Hebergement" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Client" FromRole="Client" ToRole="Reservation" />
+          <NavigationProperty Name="Adresses" Relationship="Self.ClientAdresse" FromRole="Client" ToRole="Adresse" />
+        </EntityType>
+        <EntityType Name="DispoHebergement">
+          <Key>
+            <PropertyRef Name="IdDispo" />
+          </Key>
+          <Property Name="IdDispo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdHebergement" Type="Int32" Nullable="false" />
+          <Property Name="DateDebut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Prix" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Hebergement" Relationship="Self.FK_DispoHebergement_Hebergement" FromRole="DispoHebergement" ToRole="Hebergement" />
+        </EntityType>
+        <EntityType Name="Favori">
+          <Key>
+            <PropertyRef Name="IdClient" />
+            <PropertyRef Name="IdHebergement" />
+          </Key>
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="IdHebergement" Type="Int32" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Favoris_Client" FromRole="Favori" ToRole="Client" />
+          <NavigationProperty Name="Hebergement" Relationship="Self.FK_Favoris_Hebergement" FromRole="Favori" ToRole="Hebergement" />
+        </EntityType>
+        <EntityType Name="Hebergement">
+          <Key>
+            <PropertyRef Name="IdHebergement" />
+          </Key>
+          <Property Name="IdHebergement" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAdresse" Type="Int32" Nullable="false" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="NomHebergement" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeHebergement" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrixDeBase" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Etat" Type="Boolean" />
+          <Property Name="Departement" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Adresse" Relationship="Self.FK_Hebergement_Adresse" FromRole="Hebergement" ToRole="Adresse" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Hebergement_Client" FromRole="Hebergement" ToRole="Client" />
+          <NavigationProperty Name="DispoHebergements" Relationship="Self.FK_DispoHebergement_Hebergement" FromRole="Hebergement" ToRole="DispoHebergement" />
+          <NavigationProperty Name="Favoris" Relationship="Self.FK_Favoris_Hebergement" FromRole="Hebergement" ToRole="Favori" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Hebergement" FromRole="Hebergement" ToRole="Reservation" />
+          <NavigationProperty Name="Saisons" Relationship="Self.FK_Saison_Hebergement" FromRole="Hebergement" ToRole="Saison" />
+        </EntityType>
+        <EntityType Name="Messagerie">
+          <Key>
+            <PropertyRef Name="IdMessagerie" />
+          </Key>
+          <Property Name="IdMessagerie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExpediteur" Type="Int32" Nullable="false" />
+          <Property Name="IdDestinataire" Type="Int32" Nullable="false" />
+          <Property Name="Messages" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Statut" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="IdReservation" />
+          </Key>
+          <Property Name="IdReservation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="IdHebergement" Type="Int32" Nullable="false" />
+          <Property Name="IdAdresse" Type="Int32" Nullable="false" />
+          <Property Name="DateReservation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PrixTotal" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Reservation_Client" FromRole="Reservation" ToRole="Client" />
+          <NavigationProperty Name="Hebergement" Relationship="Self.FK_Reservation_Hebergement" FromRole="Reservation" ToRole="Hebergement" />
+        </EntityType>
+        <EntityType Name="Saison">
+          <Key>
+            <PropertyRef Name="IdSaison" />
+          </Key>
+          <Property Name="IdSaison" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdHebergement" Type="Int32" Nullable="false" />
+          <Property Name="DateDebut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Prix" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Hebergement" Relationship="Self.FK_Saison_Hebergement" FromRole="Saison" ToRole="Hebergement" />
+        </EntityType>
+        <EntityType Name="AdresseClient">
+          <Key>
+            <PropertyRef Name="IdAdresse" />
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdAdresse" Type="Int32" Nullable="false" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Hebergement_Adresse">
+          <End Role="Adresse" Type="Self.Adresse" Multiplicity="1" />
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adresse">
+              <PropertyRef Name="IdAdresse" />
+            </Principal>
+            <Dependent Role="Hebergement">
+              <PropertyRef Name="IdAdresse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favoris_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Favori" Type="Self.Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Favori">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hebergement_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Hebergement">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispoHebergement_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="DispoHebergement" Type="Self.DispoHebergement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="DispoHebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favoris_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="Favori" Type="Self.Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="Favori">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Saison_Hebergement">
+          <End Role="Hebergement" Type="Self.Hebergement" Multiplicity="1" />
+          <End Role="Saison" Type="Self.Saison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hebergement">
+              <PropertyRef Name="IdHebergement" />
+            </Principal>
+            <Dependent Role="Saison">
+              <PropertyRef Name="IdHebergement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ClientAdresse">
+          <End Role="Adresse" Type="Self.Adresse" Multiplicity="*" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="AirSeaSunEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Adresses" EntityType="Self.Adresse" />
+          <EntitySet Name="Avis" EntityType="Self.Avi" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="DispoHebergements" EntityType="Self.DispoHebergement" />
+          <EntitySet Name="Favoris" EntityType="Self.Favori" />
+          <EntitySet Name="Hebergements" EntityType="Self.Hebergement" />
+          <EntitySet Name="Messageries" EntityType="Self.Messagerie" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservation" />
+          <EntitySet Name="Saisons" EntityType="Self.Saison" />
+          <EntitySet Name="AdresseClients" EntityType="Self.AdresseClient" />
+          <AssociationSet Name="FK_Hebergement_Adresse" Association="Self.FK_Hebergement_Adresse">
+            <End Role="Adresse" EntitySet="Adresses" />
+            <End Role="Hebergement" EntitySet="Hebergements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favoris_Client" Association="Self.FK_Favoris_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Favori" EntitySet="Favoris" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hebergement_Client" Association="Self.FK_Hebergement_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Hebergement" EntitySet="Hebergements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Client" Association="Self.FK_Reservation_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispoHebergement_Hebergement" Association="Self.FK_DispoHebergement_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergements" />
+            <End Role="DispoHebergement" EntitySet="DispoHebergements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favoris_Hebergement" Association="Self.FK_Favoris_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergements" />
+            <End Role="Favori" EntitySet="Favoris" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Hebergement" Association="Self.FK_Reservation_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergements" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Saison_Hebergement" Association="Self.FK_Saison_Hebergement">
+            <End Role="Hebergement" EntitySet="Hebergements" />
+            <End Role="Saison" EntitySet="Saisons" />
+          </AssociationSet>
+          <AssociationSet Name="ClientAdresse" Association="Self.ClientAdresse">
+            <End Role="Adresse" EntitySet="Adresses" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AirSeaSunModelStoreContainer" CdmEntityContainer="AirSeaSunEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="IdAdmin" ColumnName="IdAdmin" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Adresses">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Adresse">
+              <MappingFragment StoreEntitySet="Adresse">
+                <ScalarProperty Name="IdAdresse" ColumnName="IdAdresse" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Rue" ColumnName="Rue" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+                <ScalarProperty Name="Ville" ColumnName="Ville" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Avis">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Avi">
+              <MappingFragment StoreEntitySet="Avi">
+                <ScalarProperty Name="IdAvis" ColumnName="IdAvis" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="IdHebergement" ColumnName="IdHebergement" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DispoHebergements">
+            <EntityTypeMapping TypeName="AirSeaSunModel.DispoHebergement">
+              <MappingFragment StoreEntitySet="DispoHebergement">
+                <ScalarProperty Name="IdDispo" ColumnName="IdDispo" />
+                <ScalarProperty Name="IdHebergement" ColumnName="IdHebergement" />
+                <ScalarProperty Name="DateDebut" ColumnName="DateDebut" />
+                <ScalarProperty Name="DateFin" ColumnName="DateFin" />
+                <ScalarProperty Name="Prix" ColumnName="Prix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favoris">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Favori">
+              <MappingFragment StoreEntitySet="Favori">
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="IdHebergement" ColumnName="IdHebergement" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hebergements">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Hebergement">
+              <MappingFragment StoreEntitySet="Hebergement">
+                <ScalarProperty Name="IdHebergement" ColumnName="IdHebergement" />
+                <ScalarProperty Name="IdAdresse" ColumnName="IdAdresse" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="NomHebergement" ColumnName="NomHebergement" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="TypeHebergement" ColumnName="TypeHebergement" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PrixDeBase" ColumnName="PrixDeBase" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Departement" ColumnName="Departement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messageries">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Messagerie">
+              <MappingFragment StoreEntitySet="Messagerie">
+                <ScalarProperty Name="IdMessagerie" ColumnName="IdMessagerie" />
+                <ScalarProperty Name="IdExpediteur" ColumnName="IdExpediteur" />
+                <ScalarProperty Name="IdDestinataire" ColumnName="IdDestinataire" />
+                <ScalarProperty Name="Messages" ColumnName="Messages" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Statut" ColumnName="Statut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="IdReservation" ColumnName="IdReservation" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="IdHebergement" ColumnName="IdHebergement" />
+                <ScalarProperty Name="IdAdresse" ColumnName="IdAdresse" />
+                <ScalarProperty Name="DateReservation" ColumnName="DateReservation" />
+                <ScalarProperty Name="PrixTotal" ColumnName="PrixTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Saisons">
+            <EntityTypeMapping TypeName="AirSeaSunModel.Saison">
+              <MappingFragment StoreEntitySet="Saison">
+                <ScalarProperty Name="IdSaison" ColumnName="IdSaison" />
+                <ScalarProperty Name="IdHebergement" ColumnName="IdHebergement" />
+                <ScalarProperty Name="DateDebut" ColumnName="DateDebut" />
+                <ScalarProperty Name="DateFin" ColumnName="DateFin" />
+                <ScalarProperty Name="Prix" ColumnName="Prix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdresseClients">
+            <EntityTypeMapping TypeName="AirSeaSunModel.AdresseClient">
+              <MappingFragment StoreEntitySet="AdresseClient">
+                <ScalarProperty Name="IdAdresse" ColumnName="IdAdresse" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ClientAdresse" TypeName="AirSeaSunModel.ClientAdresse" StoreEntitySet="ClientAdresse">
+            <EndProperty Name="Adresse">
+              <ScalarProperty Name="IdAdresse" ColumnName="IdAdresse" />
+            </EndProperty>
+            <EndProperty Name="Client">
+              <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
